@@ -1,0 +1,45 @@
+{
+  "name": "angular-barcode-listener",
+  "version": "1.0.0",
+  "description": "Listen for barcode scanner events in your Angular application",
+  "author": "Good Eggs <open-source@goodeggs.com>",
+  "contributors": [
+    "Max Edmands <me@maxedmands.com>"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "barcode angular scanner"
+  ],
+  "main": "lib/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/goodeggs/angular-barcode-listener.git"
+  },
+  "homepage": "https://github.com/goodeggs/angular-barcode-listener",
+  "bugs": "https://github.com/goodeggs/angular-barcode-listener/issues",
+  "devDependencies": {
+    "bower": "^1.3.1",
+    "browserify": "^3.32.0",
+    "chai": "^2.2.0",
+    "chai-jquery": "^2.0.0",
+    "coffee-script": ">=1.8.x",
+    "karma": "^0.12.21",
+    "karma-chai": "^0.1.0",
+    "karma-chai-jquery": "^1.0.0",
+    "karma-coffee-preprocessor": "^0.2.1",
+    "karma-jquery": "^0.1.0",
+    "karma-mocha": "^0.1.6",
+    "karma-phantomjs-launcher": "^0.1.4",
+    "karma-sinon-chai": "^0.1.5",
+    "uglify-js": "^2.4.12"
+  },
+  "scripts": {
+    "compile": "coffee --bare --compile --output lib/ src/",
+    "prepublish": "bower -sj install",
+    "pretest": "npm run build",
+    "test": "karma start",
+    "link": "browserify lib/index.js > angular-barcode-listener.js",
+    "minify": "uglifyjs angular-barcode-listener.js > angular-barcode-listener.min.js",
+    "build": "npm run compile && npm run link && npm run minify"
+  }
+}
