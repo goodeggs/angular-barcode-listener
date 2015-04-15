@@ -6,7 +6,7 @@ Listen for scan with specified product prefix.
 
 module.exports = angular.module 'barcodeListener', []
 
-.directive 'barcodeListener', ($rootScope, $timeout, $document) ->
+.directive 'barcodeListener', ['$rootScope', '$timeout', '$document', ($rootScope, $timeout, $document) ->
   restrict: 'EA'
 
   scope:
@@ -41,3 +41,4 @@ module.exports = angular.module 'barcodeListener', []
 
     element.on '$destroy', ->
       $document.off 'keypress', keypressHandler
+]
