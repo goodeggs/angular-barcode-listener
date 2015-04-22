@@ -12,10 +12,12 @@ module.exports = angular.module('barcodeListener', []).directive('barcodeListene
       restrict: 'EA',
       scope: {
         onScan: '=',
-        prefix: '@'
+        prefix: '@',
+        scanDuration: '@?'
       },
       link: function(scope, element, attrs) {
-        var codeBuffer, keypressHandler, scannedPrefix, scanning;
+        var codeBuffer, keypressHandler, scanDuration, scannedPrefix, scanning;
+        scanDuration = +attrs.scanDuration || 50;
         codeBuffer = scannedPrefix = '';
         scanning = false;
         keypressHandler = function($event) {
@@ -32,7 +34,7 @@ module.exports = angular.module('barcodeListener', []).directive('barcodeListene
               scannedPrefix = codeBuffer = '';
               return scanning = false;
             };
-            $timeout(finishScan, 50);
+            $timeout(finishScan, scanDuration);
           }
           if (scannedPrefix === scope.prefix && /[^\s]/.test(char)) {
             return codeBuffer += char;

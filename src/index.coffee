@@ -12,8 +12,10 @@ module.exports = angular.module 'barcodeListener', []
   scope:
     onScan: '='
     prefix: '@'
+    scanDuration: '@?'
 
   link: (scope, element, attrs) ->
+    scanDuration = +attrs.scanDuration or 50
     codeBuffer = scannedPrefix = ''
     scanning = no
 
@@ -30,7 +32,7 @@ module.exports = angular.module 'barcodeListener', []
             scope.onScan codeBuffer
           scannedPrefix = codeBuffer = ''
           scanning = no
-        $timeout finishScan, 50
+        $timeout finishScan, scanDuration
 
       if scannedPrefix is scope.prefix and /[^\s]/.test char
         codeBuffer += char
