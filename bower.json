@@ -1,7 +1,7 @@
 {
   "name": "angular-barcode-listener",
   "main": "angular-barcode-listener.js",
-  "version": "1.1.0",
+  "version": "1.3.0",
   "homepage": "https://github.com/goodeggs/angular-barcode-listener",
   "description": "Listen for barcode scanner events in your Angular application",
   "keywords": [
