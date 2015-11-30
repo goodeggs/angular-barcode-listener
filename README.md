@@ -16,6 +16,26 @@ Install from:
 var app = angular.module('app', ['angularBarcodeListener']);
 ```
 
+## Bookmarklet
+
+If you need to simulate scanning a barcode while developing and don't have a scanner handy you can paste the following code into a bookmark which will prompt you to enter some text that you want "scanned":
+
+```javascript
+javascript:(function(){
+  var $document = window.angular.element(document).injector().get('$document');
+
+  var triggerKeypressEvent = function(char) {
+    var event = new Event('keypress');
+    event.which = char.charCodeAt(0);
+    $document.triggerHandler(event);
+  };
+
+  var barcode = prompt('Text to scan');
+  for (var i = 0; i < barcode.length; i++) {
+    triggerKeypressEvent(barcode[i]);
+  }
+})();
+```
 
 ## Contributing
 
