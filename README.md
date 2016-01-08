@@ -16,6 +16,19 @@ Install from:
 var app = angular.module('app', ['angularBarcodeListener']);
 ```
 
+```html
+<barcode-listener
+  on-scan='ctrl.handleScan'
+  prefix='P%'
+  scan-duration='500'
+></barcode-listener>
+```
+
+## Configuration
+
+**prefix** - expected prefix for scan inputs
+**onScan** - callback to call after successful scan
+**scanDuration** - milliseconds duration for scan to complete (defaults to 50)
 
 ## Contributing
 
