@@ -13,7 +13,7 @@ Install from:
 - Bower: `bower install angular-barcode-listener`
 
 ```javascript
-var app = angular.module('app', ['angularBarcodeListener']);
+var app = angular.module('app', ['barcodeListener']);
 ```
 
 ```html
