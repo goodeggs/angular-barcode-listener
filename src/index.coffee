@@ -1,3 +1,5 @@
+barcodeScanListener = require 'barcode-scan-listener'
+
 ###
 Listen for scan with specified product prefix.
 @param [Function] onScan - callback to call when scan is successful. Passes the scanned string.
@@ -6,7 +8,7 @@ Listen for scan with specified product prefix.
 
 module.exports = angular.module 'barcodeListener', []
 
-.directive 'barcodeListener', ['$rootScope', '$timeout', '$document', ($rootScope, $timeout, $document) ->
+.directive 'barcodeListener', ->
   restrict: 'EA'
 
   scope:
@@ -15,32 +17,8 @@ module.exports = angular.module 'barcodeListener', []
     scanDuration: '@?'
 
   link: (scope, element, attrs) ->
-    scanDuration = +attrs.scanDuration or 50
-    codeBuffer = scannedPrefix = ''
-    scanning = no
+    scanDuration = +scope.scanDuration or 50
 
-    keypressHandler = ($event) ->
-      char = String.fromCharCode($event.which)
+    removeScanListener = barcodeScanListener.onScan({barcodePrefix: scope.prefix, scanDuration}, scope.onScan)
 
-      charIndex = scope.prefix.indexOf char
-      expectedPrefix = scope.prefix.slice(0, charIndex)
-
-      if not scanning
-        scanning = yes
-        finishScan = ->
-          if codeBuffer
-            scope.onScan codeBuffer
-          scannedPrefix = codeBuffer = ''
-          scanning = no
-        $timeout finishScan, scanDuration
-
-      if scannedPrefix is scope.prefix and /[^\s]/.test char
-        codeBuffer += char
-      else if scannedPrefix is expectedPrefix and char is scope.prefix.charAt(charIndex)
-        scannedPrefix += char
-
-    $document.on 'keypress', keypressHandler
-
-    element.on '$destroy', ->
-      $document.off 'keypress', keypressHandler
-]
+    element.on '$destroy', removeScanListener

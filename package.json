@@ -45,5 +45,8 @@
     "link": "browserify lib/index.js > angular-barcode-listener.js",
     "minify": "uglifyjs angular-barcode-listener.js > angular-barcode-listener.min.js",
     "build": "npm run compile && npm run link && npm run minify"
+  },
+  "dependencies": {
+    "barcode-scan-listener": "^1.0.2"
   }
 }
