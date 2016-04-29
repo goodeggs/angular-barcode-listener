@@ -17,6 +17,7 @@ module.exports = angular.module('barcodeListener', []).directive('barcodeListene
     scope: {
       onScan: '=',
       prefix: '@',
+      length: '@',
       scanDuration: '@?'
     },
     link: function(scope, element, attrs) {
@@ -24,6 +25,7 @@ module.exports = angular.module('barcodeListener', []).directive('barcodeListene
       scanDuration = +scope.scanDuration || 50;
       removeScanListener = barcodeScanListener.onScan({
         barcodePrefix: scope.prefix,
+        barcodeLength: +scope.length || void 0,
         scanDuration: scanDuration
       }, scope.onScan);
       return element.on('$destroy', removeScanListener);
@@ -37,10 +39,14 @@ module.exports = angular.module('barcodeListener', []).directive('barcodeListene
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+/* eslint-env browser */
+
 exports.default = {
   /**
    * Listen for scan with specified characteristics
    * @param  {String} scanCharacteristics.barcodePrefix
+   * @param  {Number} [scanCharacteristics.barcodeLength] - if provided, the listener will
+   * wait for this many characters to be read before calling the handler
    * @param  {Number} [scanCharacteristics.scanDuration]
    * @param  {Function} scanHandler - called with the results of the scan
    * @return {Function} remove this listener
@@ -50,11 +56,15 @@ exports.default = {
     var _ref = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
 
     var barcodePrefix = _ref.barcodePrefix;
+    var barcodeLength = _ref.barcodeLength;
     var scanDuration = _ref.scanDuration;
     var scanHandler = arguments[1];
 
     if (typeof barcodePrefix !== 'string') {
       throw new TypeError('barcodePrefix must be a string');
+    }
+    if (barcodeLength && typeof barcodeLength !== 'number') {
+      throw new TypeError('barcodeLength must be a number');
     }
     if (scanDuration && typeof scanDuration !== 'number') {
       throw new TypeError('scanDuration must be a number');
@@ -62,13 +72,33 @@ exports.default = {
     if (typeof scanHandler !== 'function') {
       throw new TypeError('scanHandler must be a function');
     }
+
+    /**
+     * SwipeTrack calls this function, if defined, whenever a barcode is scanned
+     * within the SwipeTrack browser.  See "SwipeTrack Browser JavaScript Functions" section of
+     * SwipeTrack API: http://swipetrack.net/support/faq/pdf/SwipeTrack%20API%20(v5.0.0).pdf
+    */
+    if (typeof window.onScanAppBarCodeData !== 'function') {
+      window.onScanAppBarCodeData = function (barcode) {
+        window.onScanAppBarCodeData.scanHandlers.forEach(function (handler) {
+          return handler(barcode);
+        });
+        return true;
+      };
+      window.onScanAppBarCodeData.scanHandlers = [];
+    }
+    var swipeTrackHandler = function swipeTrackHandler(barcode) {
+      if (barcode.match('^' + barcodePrefix) !== null) scanHandler(barcode.slice(barcodePrefix.length));
+    };
+    window.onScanAppBarCodeData.scanHandlers.push(swipeTrackHandler);
+
     scanDuration = scanDuration || 50;
     var isScanning = false;
     var codeBuffer = '';
     var scannedPrefix = '';
     var finishScan = function finishScan() {
       if (codeBuffer) {
-        scanHandler(codeBuffer);
+        if (!barcodeLength) scanHandler(codeBuffer);else if (codeBuffer.length >= barcodeLength) scanHandler(codeBuffer.substr(0, barcodeLength));
       }
       scannedPrefix = '';
       codeBuffer = '';
@@ -90,6 +120,8 @@ exports.default = {
     };
     var removeListener = function removeListener() {
       document.removeEventListener('keypress', keypressHandler);
+      var swipeTrackHandlerIndex = window.onScanAppBarCodeData.scanHandlers.indexOf(swipeTrackHandler);
+      if (swipeTrackHandlerIndex >= 0) window.onScanAppBarCodeData.scanHandlers.splice(swipeTrackHandlerIndex, 1);
     };
     document.addEventListener('keypress', keypressHandler);
     return removeListener;

@@ -14,11 +14,16 @@ module.exports = angular.module 'barcodeListener', []
   scope:
     onScan: '='
     prefix: '@'
+    length: '@'
     scanDuration: '@?'
 
   link: (scope, element, attrs) ->
     scanDuration = +scope.scanDuration or 50
 
-    removeScanListener = barcodeScanListener.onScan({barcodePrefix: scope.prefix, scanDuration}, scope.onScan)
+    removeScanListener = barcodeScanListener.onScan {
+      barcodePrefix: scope.prefix
+      barcodeLength: +scope.length or undefined
+      scanDuration
+    }, scope.onScan
 
     element.on '$destroy', removeScanListener
