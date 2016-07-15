@@ -20,6 +20,7 @@ var app = angular.module('app', ['barcodeListener']);
 <barcode-listener
   on-scan='ctrl.handleScan'
   prefix='P%'
+  length=24
   scan-duration='500'
 ></barcode-listener>
 ```
@@ -27,6 +28,7 @@ var app = angular.module('app', ['barcodeListener']);
 ## Configuration
 
 - **prefix** - expected prefix for scan inputs
+- **length** - expected length for scan inputs, not including prefix – *optional* - scans of different length will not be registered if this is provided
 - **onScan** - callback to call after successful scan
 - **scanDuration** - milliseconds duration for scan to complete (defaults to 50)
 
