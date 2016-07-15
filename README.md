@@ -20,7 +20,7 @@ var app = angular.module('app', ['barcodeListener']);
 <barcode-listener
   on-scan='ctrl.handleScan'
   prefix='P%'
-  length=24
+  length='24'
   scan-duration='500'
 ></barcode-listener>
 ```
