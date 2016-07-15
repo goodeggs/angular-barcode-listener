@@ -7,6 +7,7 @@
     "Max Edmands <me@maxedmands.com>"
   ],
   "license": "MIT",
+  "private": false,
   "keywords": [
     "barcode angular scanner"
   ],
@@ -51,5 +52,9 @@
   },
   "dependencies": {
     "barcode-scan-listener": "^2.0.3"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "always-auth": true
   }
 }
