@@ -31,7 +31,7 @@ module.exports = angular.module('barcodeListener', []).directive('barcodeListene
       removeScanListener = barcodeScanListener.onScan({
         barcodePrefix: scope.prefix,
         barcodeValueTest: scope.valueTest,
-        finishScanOnMatch: finishScanOnMatch,
+        finishScanOnMatch: scope.finishScanOnMatch,
         scanDuration: scanDuration
       }, scope.onScan);
       return element.on('$destroy', removeScanListener);
