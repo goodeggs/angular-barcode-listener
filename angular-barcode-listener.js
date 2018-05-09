@@ -30,7 +30,7 @@ module.exports = angular.module('barcodeListener', []).directive('barcodeListene
       scanDuration = +scope.scanDuration || 50;
       removeScanListener = barcodeScanListener.onScan({
         barcodePrefix: scope.prefix,
-        barcodeValueTest: new RegExp(scope.valueTest),
+        barcodeValueTest: !!scope.valueTest ? new RegExp(scope.valueTest) : void 0,
         finishScanOnMatch: scope.finishScanOnMatch ? scope.finishScanOnMatch === 'true' : true,
         scanDuration: scanDuration
       }, scope.onScan);
@@ -117,7 +117,7 @@ exports.default = {
 
       if (prefixBuffer === expectedPrefixSlice && char === barcodePrefix.charAt(charIndex)) {
         prefixBuffer += char;
-      } else if (matchedPrefix || barcodePrefix === '') {
+      } else if (matchedPrefix) {
         valueBuffer += char;
       }
 
