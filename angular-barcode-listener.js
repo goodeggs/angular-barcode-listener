@@ -117,7 +117,7 @@ exports.default = {
 
       if (prefixBuffer === expectedPrefixSlice && char === barcodePrefix.charAt(charIndex)) {
         prefixBuffer += char;
-      } else if (matchedPrefix) {
+      } else if (matchedPrefix || prefixBuffer === '') {
         valueBuffer += char;
       }
 
