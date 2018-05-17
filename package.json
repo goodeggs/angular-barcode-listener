@@ -36,10 +36,10 @@
     "karma-phantomjs-launcher": "^0.1.4",
     "karma-sinon-chai": "^0.1.5",
     "karma-spec-reporter": "0.0.19",
-    "uglify-js": "^2.4.12",
     "mocha": "^2.3.3",
     "sinon": "^1.17.2",
-    "sinon-chai": "2.8.0"
+    "sinon-chai": "2.8.0",
+    "uglify-js": "^2.4.12"
   },
   "scripts": {
     "compile": "coffee --bare --compile --output lib/ src/",
@@ -51,7 +51,7 @@
     "build": "npm run compile && npm run link && npm run minify"
   },
   "dependencies": {
-    "barcode-scan-listener": "^2.0.3"
+    "barcode-scan-listener": "^2.0.4"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
