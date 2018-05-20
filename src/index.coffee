@@ -27,8 +27,8 @@ module.exports = angular.module 'barcodeListener', []
 
     removeScanListener = barcodeScanListener.onScan {
       barcodePrefix: scope.prefix
-      barcodeValueTest: if !!scope.valueTest then new RegExp(scope.valueTest) else undefined
-      finishScanOnMatch: if scope.finishScanOnMatch then scope.finishScanOnMatch == 'true' else true
+      barcodeValueTest: if scope.valueTest then new RegExp(scope.valueTest) else undefined
+      finishScanOnMatch: if scope.finishScanOnMatch then scope.finishScanOnMatch == 'true' else undefined
       scanDuration
     }, scope.onScan
 

@@ -28,9 +28,12 @@ var app = angular.module('app', ['barcodeListener']);
 ## Configuration
 
 - **prefix** - expected prefix for scan inputs
-- **length** - expected length for scan inputs, not including prefix – *optional* - scans of different length will not be registered if this is provided
 - **onScan** - callback to call after successful scan
 - **scanDuration** - milliseconds duration for scan to complete (defaults to 50)
+- **barcodeValueTest** - RegExp defining valid scan value (not including prefix).
+- **finishScanOnMatch** - if true, test scan value (not including prefix)
+  match with barcodeValueTest on each character. If matched, immediately
+  call the scanHandler with the value. This will generally make scans faster.
 
 ## Bookmarklet
 
