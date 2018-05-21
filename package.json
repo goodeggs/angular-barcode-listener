@@ -50,6 +50,6 @@
     "build": "npm run compile && npm run link && npm run minify"
   },
   "dependencies": {
-    "barcode-scan-listener": "^2.0.4"
+    "barcode-scan-listener": "^2.0.3"
   }
 }
