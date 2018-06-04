@@ -7,11 +7,9 @@ Listen for barcode scanner events in your Angular application
 
 ## Usage
 
-Install from:
-
-- NPM: `npm install angular-barcode-listener`
-- Yarn: `yarn add angular-barcode-listener`
-- Bower: `bower install angular-barcode-listener`
+```
+npm install angular-barcode-listener
+```
 
 ```javascript
 var app = angular.module('app', ['barcodeListener']);

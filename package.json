@@ -21,8 +21,6 @@
   "devDependencies": {
     "angular": "^1.4.10",
     "angular-mocks": "^1.4.10",
-    "bower": "^1.3.1",
-    "browserify": "^3.32.0",
     "chai": "^3.2.0",
     "chai-jquery": "^2.0.0",
     "coffee-script": ">=1.8.x",
@@ -42,13 +40,10 @@
     "uglify-js": "^2.4.12"
   },
   "scripts": {
-    "compile": "coffee --bare --compile --output lib/ src/",
-    "prepublish": "bower -sj install",
-    "pretest": "npm run build",
-    "test": "node --eval \"require('goodeggs-karma').run({files: ['node_modules/angular/angular.js', 'node_modules/angular-mocks/angular-mocks.js', 'test/*.test.coffee']})\"",
-    "link": "browserify lib/index.js > angular-barcode-listener.js",
-    "minify": "uglifyjs angular-barcode-listener.js > angular-barcode-listener.min.js",
-    "build": "npm run compile && npm run link && npm run minify"
+    "build": "coffee --bare --compile --output lib/ src/",
+    "prepublishOnly": "yarn build",
+    "pretest": "yarn build",
+    "test": "node --eval \"require('goodeggs-karma').run({files: ['node_modules/angular/angular.js', 'node_modules/angular-mocks/angular-mocks.js', 'test/test.coffee']})\""
   },
   "dependencies": {
     "barcode-scan-listener": "^2.0.4"
